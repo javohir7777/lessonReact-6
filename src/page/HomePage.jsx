@@ -16,6 +16,7 @@ const HomePage = () => {
     quantity: "",
     description: "",
   });
+  const [search, setSearch] = useState("");
 
   const handlePrice = (e) => {
     setPrice({ ...price, [e.target.id]: e.target.value });
@@ -41,6 +42,15 @@ const HomePage = () => {
       });
     }
   };
+
+  const handleSearch = (e) => {
+    setSearch(e.target.value.trim().toLowerCase());
+  };
+
+  const resalt = prices.filter((ell) =>
+    ell.productName.trim().toLowerCase().includes(search)
+  );
+
   return (
     <Card className="container mt-4">
       <Card.Body>
@@ -54,8 +64,8 @@ const HomePage = () => {
             />
           </Col>
           <Col lg={8}>
-            <StudentSearch />
-            <StudentsTable prices={prices} />
+            <StudentSearch search={search} handleSearch={handleSearch} />
+            <StudentsTable prices={resalt} />
           </Col>
         </Row>
       </Card.Body>
