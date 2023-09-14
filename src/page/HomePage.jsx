@@ -6,9 +6,9 @@ import { useState } from "react";
 import { v4 } from "uuid";
 
 const HomePage = () => {
-  // const pricesJson = localStorage.getItem("prices");
+  const pricesJSON = localStorage.getItem("prices");
   const [validated, setValidated] = useState(false);
-  const [prices, setPrices] = useState([]);
+  const [prices, setPrices] = useState(JSON.parse(pricesJSON) || []);
   const [price, setPrice] = useState({
     productName: "",
     price: "",
@@ -29,7 +29,7 @@ const HomePage = () => {
       const newProducts = [...prices, { ...price, id: v4() }];
       setPrices(newProducts);
 
-      // localStorage.setItem("prices", JSON.stringify(newProducts));
+      localStorage.setItem("prices", JSON.stringify(newProducts));
 
       setValidated(false);
       setPrice({
