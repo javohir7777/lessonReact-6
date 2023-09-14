@@ -1,0 +1,1 @@
+export const pricees=["Drinks","Dair", "Flours", "Meats", "Fruits"]
