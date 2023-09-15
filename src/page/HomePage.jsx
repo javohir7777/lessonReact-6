@@ -2,7 +2,7 @@ import { Card, Col, Row } from "react-bootstrap";
 import StudentsForm from "../container/form/StudentsForm";
 import StudentSearch from "../container/search/StudentSearch";
 import StudentsTable from "../container/table/StudentsTable";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { v4 } from "uuid";
 
 const HomePage = () => {
@@ -18,37 +18,46 @@ const HomePage = () => {
   });
   const [search, setSearch] = useState("");
 
-  const handlePrice = (e) => {
-    setPrice({ ...price, [e.target.id]: e.target.value });
-  };
+  const handlePrice = useCallback(
+    (e) => {
+      setPrice({ ...price, [e.target.id]: e.target.value });
+    },
+    [price]
+  );
 
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    setValidated(true);
-    event.preventDefault();
-    if (form.checkValidity()) {
-      const newProducts = [...prices, { ...price, id: v4() }];
-      setPrices(newProducts);
+  const handleSubmit = useCallback(
+    (event) => {
+      const form = event.currentTarget;
+      setValidated(true);
+      event.preventDefault();
+      if (form.checkValidity()) {
+        const newProducts = [...prices, { ...price, id: v4() }];
+        setPrices(newProducts);
 
-      localStorage.setItem("prices", JSON.stringify(newProducts));
+        localStorage.setItem("prices", JSON.stringify(newProducts));
 
-      setValidated(false);
-      setPrice({
-        productName: "",
-        price: "",
-        category: "Drinks",
-        quantity: "",
-        description: "",
-      });
-    }
-  };
+        setValidated(false);
+        setPrice({
+          productName: "",
+          price: "",
+          category: "Drinks",
+          quantity: "",
+          description: "",
+        });
+      }
+    },
+    [price, prices]
+  );
 
-  const handleSearch = (e) => {
+  const handleSearch = useCallback((e) => {
     setSearch(e.target.value.trim().toLowerCase());
-  };
-
-  const resalt = prices.filter((ell) =>
-    ell.productName.trim().toLowerCase().includes(search)
+  }, []);
+  const resalt = useMemo(
+    () =>
+      prices.filter((ell) =>
+        ell.productName.trim().toLowerCase().includes(search)
+      ),
+    [prices, search]
   );
 
   return (

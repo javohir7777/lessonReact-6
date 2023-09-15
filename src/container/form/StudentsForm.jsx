@@ -1,6 +1,7 @@
 import { Button, FloatingLabel, Form } from "react-bootstrap";
 import { pricees } from "../../data/data";
 import PropTypes from "prop-types";
+import { memo } from "react";
 
 const StudentsForm = ({ validated, handleSubmit, price, handlePrice }) => {
   return (
@@ -83,4 +84,6 @@ StudentsForm.propTypes = {
   handlePrice: PropTypes.func,
 };
 
-export default StudentsForm;
+const MemoStudentsForm=memo(StudentsForm)
+
+export default MemoStudentsForm;

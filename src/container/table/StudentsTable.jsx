@@ -1,5 +1,6 @@
 import { Table } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { memo } from "react";
 
 const StudentsTable = ({ prices }) => {
   return (
@@ -42,4 +43,6 @@ const StudentsTable = ({ prices }) => {
 StudentsTable.propTypes = {
   prices: PropTypes.array,
 };
-export default StudentsTable;
+
+const MemoStudentsTable = memo(StudentsTable);
+export default MemoStudentsTable;

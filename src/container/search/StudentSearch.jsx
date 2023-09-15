@@ -1,5 +1,6 @@
 import { Form, InputGroup } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { memo } from "react";
 
 const StudentSearch = ({ search, handleSearch }) => {
   return (
@@ -21,4 +22,5 @@ StudentSearch.propTypes = {
   handleSearch: PropTypes.func,
 };
 
-export default StudentSearch;
+const MemoStudentSearch = memo(StudentSearch);
+export default MemoStudentSearch;
