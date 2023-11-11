@@ -4,7 +4,7 @@ import { memo } from "react";
 
 const StudentsTable = ({ prices }) => {
   return (
-    <div>
+    <div className="table-responsive">
       <Table striped bordered hover variant="light">
         <thead>
           <tr>

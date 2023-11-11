@@ -4,7 +4,7 @@ import { memo } from "react";
 
 const StudentSearch = ({ search, handleSearch }) => {
   return (
-    <div>
+    <div className="mt-3">
       <InputGroup className="mb-3">
         <Form.Control
           placeholder="Search..."
