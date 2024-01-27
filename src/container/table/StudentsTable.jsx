@@ -2,7 +2,8 @@ import { Table } from "react-bootstrap";
 import PropTypes from "prop-types";
 import { memo } from "react";
 
-const StudentsTable = ({ prices }) => {
+const StudentsTable = ({ prices, edit, deleteCategory }) => {
+  console.log("StudentsTable");
   return (
     <div className="table-responsive">
       <Table striped bordered hover variant="light">
@@ -14,23 +15,43 @@ const StudentsTable = ({ prices }) => {
             <th>Category</th>
             <th>Quantity</th>
             <th>Description</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {prices.length ? (
-            prices.map((price, i) => (
-              <tr key={price.id}>
-                <td>{i + 1}</td>
-                <td>{price.productName}</td>
-                <td>{price.price}</td>
-                <td>{price.category}</td>
-                <td>{price.quantity}</td>
-                <td>{price.description}</td>
-              </tr>
-            ))
+            prices.map(
+              (
+                { productName, price, category, quantity, description, id },
+                i
+              ) => (
+                <tr key={id}>
+                  <td>{i + 1}</td>
+                  <td>{productName}</td>
+                  <td>{price}</td>
+                  <td>{category}</td>
+                  <td>{quantity}</td>
+                  <td>{description}</td>
+                  <td className="d-flex align-items-center gap-2">
+                    <button
+                      className="btn btn-success"
+                      onClick={() => edit(id)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger"
+                      onClick={() => deleteCategory(id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              )
+            )
           ) : (
             <tr>
-              <td colSpan={6} className="text-center">
+              <td colSpan={7} className="text-center">
                 No prodacts
               </td>
             </tr>
@@ -42,6 +63,8 @@ const StudentsTable = ({ prices }) => {
 };
 StudentsTable.propTypes = {
   prices: PropTypes.array,
+  edit: PropTypes.func,
+  deleteCategory: PropTypes.func,
 };
 
 const MemoStudentsTable = memo(StudentsTable);

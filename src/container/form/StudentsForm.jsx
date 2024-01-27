@@ -3,7 +3,14 @@ import { pricees } from "../../data/data";
 import PropTypes from "prop-types";
 import { memo } from "react";
 
-const StudentsForm = ({ validated, handleSubmit, price, handlePrice }) => {
+const StudentsForm = ({
+  validated,
+  handleSubmit,
+  price,
+  handlePrice,
+  selected,
+}) => {
+  console.log("StudentsForm");
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Group controlId="productName">
@@ -71,7 +78,7 @@ const StudentsForm = ({ validated, handleSubmit, price, handlePrice }) => {
       </FloatingLabel>
 
       <Button className="mt-3 w-100" type="submit">
-        Add Prodact
+        {selected ? "Save" : "Add Prodact"}
       </Button>
     </Form>
   );
@@ -82,8 +89,9 @@ StudentsForm.propTypes = {
   handleSubmit: PropTypes.func,
   price: PropTypes.object,
   handlePrice: PropTypes.func,
+  selected: PropTypes.string,
 };
 
-const MemoStudentsForm=memo(StudentsForm)
+const MemoStudentsForm = memo(StudentsForm);
 
 export default MemoStudentsForm;

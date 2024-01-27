@@ -17,6 +17,7 @@ const HomePage = () => {
     description: "",
   });
   const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState(null);
 
   const handlePrice = useCallback(
     (e) => {
@@ -31,7 +32,20 @@ const HomePage = () => {
       setValidated(true);
       event.preventDefault();
       if (form.checkValidity()) {
-        const newProducts = [...prices, { ...price, id: v4() }];
+        let newProducts;
+        if (selected === null) {
+          newProducts = [...prices, { ...price, id: v4() }];
+        } else {
+          newProducts = prices.map((el) => {
+            if (el.id === selected) {
+              return price;
+            } else {
+              return el;
+            }
+          });
+          setSelected(null);
+        }
+
         setPrices(newProducts);
 
         localStorage.setItem("prices", JSON.stringify(newProducts));
@@ -52,6 +66,7 @@ const HomePage = () => {
   const handleSearch = useCallback((e) => {
     setSearch(e.target.value.trim().toLowerCase());
   }, []);
+
   const resalt = useMemo(
     () =>
       prices.filter((ell) =>
@@ -60,6 +75,24 @@ const HomePage = () => {
     [prices, search]
   );
 
+  const edit = useCallback(
+    (id) => {
+      const oneId = prices.find((el) => el.id === id);
+      setSelected(id);
+      setPrice(oneId);
+    },
+    [prices]
+  );
+
+  const averagePrice = +(
+    resalt.reduce((acc, ell) => acc + +ell.price, 0) / prices.length
+  ).toFixed(2);
+
+  const deleteCategory = (id) => {
+    let deleteCategory = prices.filter((ell) => ell.id !== id);
+    setPrices(deleteCategory);
+    localStorage.setItem("prices", JSON.stringify(deleteCategory));
+  };
   return (
     <Card className="container mt-4">
       <Card.Body>
@@ -70,11 +103,20 @@ const HomePage = () => {
               handleSubmit={handleSubmit}
               handlePrice={handlePrice}
               price={price}
+              selected={selected}
             />
           </Col>
           <Col lg={8}>
-            <StudentSearch search={search} handleSearch={handleSearch} />
-            <StudentsTable prices={resalt} />
+            <StudentSearch
+              search={search}
+              handleSearch={handleSearch}
+              averagePrice={averagePrice}
+            />
+            <StudentsTable
+              prices={resalt}
+              edit={edit}
+              deleteCategory={deleteCategory}
+            />
           </Col>
         </Row>
       </Card.Body>
