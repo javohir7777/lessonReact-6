@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { memo } from "react";
 
 const StudentSearch = ({ search, handleSearch, averagePrice }) => {
-  console.log("StudentSearch");
   return (
     <div className="mt-3">
       <InputGroup className="mb-3">

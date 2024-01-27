@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import { memo } from "react";
 
 const StudentsTable = ({ prices, edit, deleteCategory }) => {
-  console.log("StudentsTable");
   return (
     <div className="table-responsive">
       <Table striped bordered hover variant="light">

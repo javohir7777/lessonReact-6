@@ -88,11 +88,14 @@ const HomePage = () => {
     resalt.reduce((acc, ell) => acc + +ell.price, 0) / prices.length
   ).toFixed(2);
 
-  const deleteCategory = (id) => {
-    let deleteCategory = prices.filter((ell) => ell.id !== id);
-    setPrices(deleteCategory);
-    localStorage.setItem("prices", JSON.stringify(deleteCategory));
-  };
+  const deleteCategory = useCallback(
+    (id) => {
+      let deleteCategory = prices.filter((ell) => ell.id !== id);
+      setPrices(deleteCategory);
+      localStorage.setItem("prices", JSON.stringify(deleteCategory));
+    },
+    [prices]
+  );
   return (
     <Card className="container mt-4">
       <Card.Body>

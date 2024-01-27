@@ -10,7 +10,6 @@ const StudentsForm = ({
   handlePrice,
   selected,
 }) => {
-  console.log("StudentsForm");
   return (
     <Form noValidate validated={validated} onSubmit={handleSubmit}>
       <Form.Group controlId="productName">
